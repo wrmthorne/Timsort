@@ -1,3 +1,17 @@
+
+#   Timsort Program    #
+
+# =========================================================================== #
+'''
+Program for sorting the values of a list into lowest to highest order. Comments
+are attempted to be written in accordance with PEP 8 Style Guide: 
+http://legacy.python.org/dev/peps/pep-0008/#comments
+https://google.github.io/styleguide/pyguide.html
+'''
+# =========================================================================== #
+
+
+
 class Timsort:
     '''
     Insertion sort is applied if the size of the array is less than 64
@@ -50,13 +64,13 @@ class Timsort:
     remaining bits
     '''
     def calculate_minrun(self, n):
-        mask = (1 << 6) - 1 # Bitwise 'shift left' operation (same as 1 * 2^6 (63))
-        minrun = n & mask # Bitwise 'AND' operation 
-        remainingBits = n >> 6 # Bitwise 'shift right' operation (same as (2^6)MOD n)
-        if remainingBits > 0: 
-            minrun += 1
+        minrun = n
+        remaining_bits = length.bit_length() - 6
 
-        print("Minrun =", str(minrun))
+        if remaining_bits > 0:
+            minrun = length >> remaining_bits
+            mask = (1 << remaining_bits) - 1
+            if (length & mask) > 0: minrun += 1
 
         return minrun
 
@@ -88,8 +102,6 @@ class Timsort:
                 else:
                     newRun.append(unsortedList[i])
 
-            length = [y for x in runs for y in x]
-            print(len(length))
             toMerge = []
             toInsert = []
             for i in runs:
@@ -112,24 +124,12 @@ class Timsort:
 
         return sortedList
         
+
+
+# ====== Main Sub-Routine ====== #
+
 def sort(UnSortedList):
     t = Timsort()
     sortedList = t.timsort(UnSortedList)
     return sortedList
 
-import random
-
-number = int(input("How many random integers between 1 & 100 would you like to sort?: "))
-s = [random.randint(1, 100) for i in range(number)]
-print("BEFORE:")
-print(s)
-print("\n\n\n\nAFTER:")
-print(sort(s))
-
-
-
-
-
-
-
-    
